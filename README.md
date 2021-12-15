@@ -19,6 +19,10 @@ when adding features (maybe over several days):
 -> Repeat steps 2-7 when you need to work on this feature again
 
 when feature is finished:
-1. create new merge request (in Gitlab)
+1. git pull
 
-2. 
+2. git checkout [name of feature branch] (in console)
+
+3. git merge master
+
+4. create merge request (in Gitlab: Merge Request -> New Merge Request)
