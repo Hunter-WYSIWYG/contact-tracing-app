@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kontaktverfolgungapp">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -12,15 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KontaktverfolgungApp">
         <activity
+            android:name=".Activity_Swipe_Left"
+            android:exported="false"
+            android:label="Begegnungen"/>
+        <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="Check-In">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
     </application>
 
 </manifest>

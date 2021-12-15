@@ -14,9 +14,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
@@ -24,8 +29,28 @@ import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.google.zxing.Result;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
+//-------Gesture--------------------------------------------------------------------------------
+
+    private float x1,x2;
+    static final int MIN_DISTANCE = 50;
+
+
+//-------Menu--------------------------------------------------------------------------------
+
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
+    private EditText newcontactpopup_firstname, newcontactpopup_lastname;
+    private Button button_cancel, button_save;
+
+//-------Login--------------------------------------------------------------------------------
+
+    private String login_Text = "";
+
+//-------QR-Code--------------------------------------------------------------------------------
 
     private CodeScanner mCodeScanner;
     boolean CameraPermission = false;
@@ -36,6 +61,41 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+//-------Login--------------------------------------------------------------------------------
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setCancelable(true); //Alert wird aufgerufen, sobald man auf den Bildschirm klickt
+        builder.setTitle("Login");
+        builder.setMessage("Sie müssen sich einmalig einloggen, um die App verwenden zu können.");
+        final EditText input = new EditText(this);
+        input.setHint("Hier Ihren Namen eintragen.");
+        builder.setView(input);
+
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            //save Button muss noch implementiert werden
+
+                login_Text = input.getText().toString();
+            }
+        });
+
+        builder.show();
+
+
+
+//-------QR-Code--------------------------------------------------------------------------------
 
         CodeScannerView scannerView =  findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this,scannerView);
@@ -169,12 +229,92 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
     }
 
+
+//-------Gesture--------------------------------------------------------------------------------
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        switch(event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                x1 = event.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = event.getX();
+                float deltaX = x2 - x1;
+                if (Math.abs(deltaX) > MIN_DISTANCE)
+                {
+                    // Left to Right swipe action
+                    if (x2 > x1)
+                    {
+                        Intent i = new Intent(MainActivity.this, Activity_Swipe_Left.class);
+                        startActivity(i);
+                    }
+
+                    // Right to left swipe action
+                  /*  else
+                    {
+                        Intent i = new Intent(MainActivity.this, Activity_Swipe_Right.class);
+                        startActivity(i);
+                    }*/
+
+                }
+
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
 //-------Menu--------------------------------------------------------------------------------
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflate = getMenuInflater();
-                inflate.inflate(R.menu.example_menu,menu);
+        inflate.inflate(R.menu.example_menu,menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.item1){
+            createNewContactDialog();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void createNewContactDialog (){
+        dialogBuilder = new AlertDialog.Builder(this);
+        final View contactPopupView = getLayoutInflater().inflate(R.layout.popup, null);
+        newcontactpopup_firstname = (EditText) contactPopupView.findViewById(R.id.newcontactpopup_firstname);
+        newcontactpopup_lastname = (EditText)  contactPopupView.findViewById(R.id.newcontactpopup_lastname);
+
+        button_save = (Button) contactPopupView.findViewById(R.id.saveButton);
+        button_cancel = (Button) contactPopupView.findViewById(R.id.cancelButton);
+
+        dialogBuilder.setView(contactPopupView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
+        button_save.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //hier muss noch der Save button implementiert werden
+            }
+        });
+
+        button_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+    }
+
+
+
 }

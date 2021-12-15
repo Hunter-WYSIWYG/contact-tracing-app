@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <com.budiyev.android.codescanner.CodeScannerView
         android:id="@+id/scanner_view"
         android:layout_width="match_parent"
@@ -26,6 +27,8 @@
         android:layout_margin="20dp"
         android:text="Scann something ... "
         android:textColor="@android:color/black" />
+
+
 
 
 </RelativeLayout>
