@@ -91,7 +91,15 @@ public class MainActivity extends AppCompatActivity {
     button_Save.setOnClickListener(new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            //hier muss noch der Save button implementiert werden
+            String n  = newVorname.getText().toString();
+            String ph  = newNachname.getText().toString();
+            SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+
+            SharedPreferences.Editor editor = mySPR.edit();
+
+            editor.putString("vornameKey", n);
+            editor.putString("nachnameKey", ph);
+            editor.commit();
         }
     });
 
@@ -107,8 +115,9 @@ public class MainActivity extends AppCompatActivity {
         //Shared Pref Datei öffnen
         SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
 //Werte aus Datei in Textfelder
-        newVorname.setText(mySPR.getString("myKey1",""));
-        newNachname.setText(mySPR.getString("myKey2",""));
+        newVorname.setText(mySPR.getString("vornameKey",""));
+        newNachname.setText(mySPR.getString("nachnameKey",""));
+
 
 //-------QR-Code--------------------------------------------------------------------------------
 
@@ -148,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 //----------Speichern des namen-----------------
-    @Override
+    /*@Override
     protected void onStop() {
         super.onStop();
         //Shared Pref Datei öffnen
@@ -163,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
         editor.commit();
     }
-
+*/
 
     private void askPermission(){
 
