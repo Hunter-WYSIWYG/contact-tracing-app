@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -22,6 +23,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
@@ -66,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
+
 //-------Login--------------------------------------------------------------------------------
 
     dialogBuilder = new AlertDialog.Builder(this);
@@ -97,7 +103,12 @@ public class MainActivity extends AppCompatActivity {
         }
     });
 
-
+//-------------Name beim öffnen laden------------
+        //Shared Pref Datei öffnen
+        SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+//Werte aus Datei in Textfelder
+        newVorname.setText(mySPR.getString("myKey1",""));
+        newNachname.setText(mySPR.getString("myKey2",""));
 
 //-------QR-Code--------------------------------------------------------------------------------
 
@@ -136,6 +147,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+//----------Speichern des namen-----------------
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Shared Pref Datei öffnen
+        SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+        //Editor Klasse initiaisieren
+        SharedPreferences.Editor editor= mySPR.edit();
+
+        editor.putString("myKey1", newVorname.getText().toString());
+        editor.putString("myKey2", newNachname.getText().toString());
+
+        //speichern
+
+        editor.commit();
+    }
+
 
     private void askPermission(){
 
