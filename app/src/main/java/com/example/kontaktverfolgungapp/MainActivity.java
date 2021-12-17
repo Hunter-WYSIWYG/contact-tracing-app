@@ -48,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
 //-------Login--------------------------------------------------------------------------------
 
-    private String login_Text = "";
+    private EditText newVorname, newNachname;
+    private TextView textView;
+    private Button button_Cancel, button_Save;
 
 //-------QR-Code--------------------------------------------------------------------------------
 
@@ -66,32 +68,34 @@ public class MainActivity extends AppCompatActivity {
 
 //-------Login--------------------------------------------------------------------------------
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setCancelable(true); //Alert wird aufgerufen, sobald man auf den Bildschirm klickt
-        builder.setTitle("Login");
-        builder.setMessage("Sie müssen sich einmalig einloggen, um die App verwenden zu können.");
-        final EditText input = new EditText(this);
-        input.setHint("Hier Ihren Namen eintragen.");
-        builder.setView(input);
+    dialogBuilder = new AlertDialog.Builder(this);
+    final View loginPopupView = getLayoutInflater().inflate(R.layout.login_popup, null);
+    newVorname = (EditText) loginPopupView.findViewById(R.id.vorname_text);
+    newNachname = (EditText)  loginPopupView.findViewById(R.id.nachname_text);
 
+    textView = (TextView)  loginPopupView.findViewById(R.id.loginTextView);
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+    button_Save = (Button) loginPopupView.findViewById(R.id.save_Button);
+    button_Cancel = (Button) loginPopupView.findViewById(R.id.cancel_Button);
 
-        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            //save Button muss noch implementiert werden
+    dialogBuilder.setView(loginPopupView);
+    dialog = dialogBuilder.create();
+    dialog.show();
 
-                login_Text = input.getText().toString();
-            }
-        });
+    button_Save.setOnClickListener(new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            //hier muss noch der Save button implementiert werden
+        }
+    });
 
-        builder.show();
+    button_Cancel.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            dialog.dismiss();
+        }
+    });
 
 
 

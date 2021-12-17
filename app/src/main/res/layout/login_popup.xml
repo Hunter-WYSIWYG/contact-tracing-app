@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/loginTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/vorname_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="72dp"
         android:text="Bitte tragen Sie hier ihren vollständigen Namen ein."
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="20dp" />
 
     <EditText
         android:id="@+id/vorname_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/loginTextView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="19dp"
         android:gravity="center_horizontal"
         android:hint="Last Name"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="24dp" />
 
     <EditText
@@ -31,31 +33,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/vorname_text"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="81dp"
         android:gravity="center_horizontal"
         android:hint="Last Name"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="24dp" />
 
     <Button
         android:id="@+id/cancel_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/nachname_text"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="-68dp"
+        android:layout_below="@+id/nachname_text"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="43dp"
         android:text="cancel" />
 
     <Button
         android:id="@+id/save_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/nachname_text"
-        android:layout_marginStart="120dp"
-        android:layout_marginBottom="-68dp"
-        android:layout_toEndOf="@+id/cancel_Button"
+        android:layout_below="@+id/nachname_text"
+        android:layout_marginTop="43dp"
+        android:layout_marginLeft="260dp"
         android:text="save" />
 
 
