@@ -25,4 +25,14 @@ when feature is finished:
 
 3. git merge master
 
-4. create merge request (in Gitlab: Merge Request -> New Merge Request)
+4. git add. (in console)
+
+5. git commit -m "[some commit message]" (in console)
+
+6. git push (in console)
+
+7. create merge request (in Gitlab: Merge Request -> New Merge Request)
+
+8a. Merge if there are no conflicts
+
+8b. Contact Marcus if there are Conflicts ;)

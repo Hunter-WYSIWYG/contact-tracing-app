@@ -1,3 +1,35 @@
 <resources>
-    <string name="app_name">KontaktverfolgungApp</string>
+    <string name="app_name">KontakverfolgungsApp</string>
+
+    <string name="group1">CinemaxX</string>
+    <string name="group2">Theater</string>
+    <string name="group3">Mr. Pane</string>
+    <string name="group4"> MLU </string>
+    <string name="group5"> Sternbar </string>
+
+    <string-array name="group1">
+        <item>Charlotte Hintze</item>
+    </string-array>
+
+    <string-array name="group2">
+        <item>Anna Nass</item>
+        <item>Marie Juana</item>
+    </string-array>
+
+    <string-array name="group3">
+        <item>Paul Lahner</item>
+        <item>Charlotte Hintze</item>
+        <item>Annika Piechutta</item>
+    </string-array>
+
+    <string-array name="group4">
+        <item>Marie Juana</item>
+    </string-array>
+
+    <string-array name="group5">
+        <item>Annika Piechutta</item>
+        <item>Anna Nass</item>
+        <item>Paul Lahner</item>
+    </string-array>
+
 </resources>
