@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -22,6 +23,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
@@ -66,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
+
 //-------Login--------------------------------------------------------------------------------
 
     dialogBuilder = new AlertDialog.Builder(this);
@@ -85,7 +91,15 @@ public class MainActivity extends AppCompatActivity {
     button_Save.setOnClickListener(new View.OnClickListener(){
         @Override
         public void onClick(View v) {
-            //hier muss noch der Save button implementiert werden
+            String n  = newVorname.getText().toString();
+            String ph  = newNachname.getText().toString();
+            SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+
+            SharedPreferences.Editor editor = mySPR.edit();
+
+            editor.putString("vornameKey", n);
+            editor.putString("nachnameKey", ph);
+            editor.commit();
         }
     });
 
@@ -98,6 +112,12 @@ public class MainActivity extends AppCompatActivity {
     });
     //test
 
+//-------------Name beim öffnen laden------------
+        //Shared Pref Datei öffnen
+        SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+//Werte aus Datei in Textfelder
+        newVorname.setText(mySPR.getString("vornameKey",""));
+        newNachname.setText(mySPR.getString("nachnameKey",""));
 
 
 //-------QR-Code--------------------------------------------------------------------------------
@@ -137,6 +157,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+//----------Speichern des namen-----------------
+    /*@Override
+    protected void onStop() {
+        super.onStop();
+        //Shared Pref Datei öffnen
+        SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+        //Editor Klasse initiaisieren
+        SharedPreferences.Editor editor= mySPR.edit();
+
+        editor.putString("myKey1", newVorname.getText().toString());
+        editor.putString("myKey2", newNachname.getText().toString());
+
+        //speichern
+
+        editor.commit();
+    }
+*/
 
     private void askPermission(){
 
