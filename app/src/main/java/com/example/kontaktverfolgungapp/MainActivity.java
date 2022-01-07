@@ -67,58 +67,52 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
-
-
-
-
 //-------Login--------------------------------------------------------------------------------
 
-    dialogBuilder = new AlertDialog.Builder(this);
-    final View loginPopupView = getLayoutInflater().inflate(R.layout.login_popup, null);
-    newVorname = (EditText) loginPopupView.findViewById(R.id.vorname_text);
-    newNachname = (EditText)  loginPopupView.findViewById(R.id.nachname_text);
+            dialogBuilder = new AlertDialog.Builder(this);
+            final View loginPopupView = getLayoutInflater().inflate(R.layout.login_popup, null);
+            newVorname = (EditText) loginPopupView.findViewById(R.id.vorname_text);
+            newNachname = (EditText) loginPopupView.findViewById(R.id.nachname_text);
 
-    textView = (TextView)  loginPopupView.findViewById(R.id.loginTextView);
+            textView = (TextView) loginPopupView.findViewById(R.id.loginTextView);
 
-    button_Save = (Button) loginPopupView.findViewById(R.id.save_Button);
-    button_Cancel = (Button) loginPopupView.findViewById(R.id.cancel_Button);
+            button_Save = (Button) loginPopupView.findViewById(R.id.save_Button);
+            button_Cancel = (Button) loginPopupView.findViewById(R.id.cancel_Button);
 
-    dialogBuilder.setView(loginPopupView);
-    dialog = dialogBuilder.create();
-    dialog.show();
+            dialogBuilder.setView(loginPopupView);
+            dialog = dialogBuilder.create();
+            dialog.show();
 
-    button_Save.setOnClickListener(new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            String n  = newVorname.getText().toString();
-            String ph  = newNachname.getText().toString();
-            SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+            button_Save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String n = newVorname.getText().toString();
+                    String ph = newNachname.getText().toString();
+                    SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
 
-            SharedPreferences.Editor editor = mySPR.edit();
+                    SharedPreferences.Editor editor = mySPR.edit();
 
-            editor.putString("vornameKey", n);
-            editor.putString("nachnameKey", ph);
-            editor.commit();
-        }
-    });
+                    editor.putString("vornameKey", n);
+                    editor.putString("nachnameKey", ph);
+                    editor.commit();
+                }
+            });
 
-    button_Cancel.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+            button_Cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-            dialog.dismiss();
-        }
-    });
-    //test
+                    dialog.dismiss();
+                }
+            });
+            //test
 
 //-------------Name beim öffnen laden------------
-        //Shared Pref Datei öffnen
-        SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+            //Shared Pref Datei öffnen
+            SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
 //Werte aus Datei in Textfelder
-        newVorname.setText(mySPR.getString("vornameKey",""));
-        newNachname.setText(mySPR.getString("nachnameKey",""));
-
+            newVorname.setText(mySPR.getString("vornameKey", ""));
+            newNachname.setText(mySPR.getString("nachnameKey", ""));
 
 //-------QR-Code--------------------------------------------------------------------------------
 
@@ -329,6 +323,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createNewContactDialog (){
+
         dialogBuilder = new AlertDialog.Builder(this);
         final View contactPopupView = getLayoutInflater().inflate(R.layout.popup, null);
         newcontactpopup_firstname = (EditText) contactPopupView.findViewById(R.id.newcontactpopup_firstname);
@@ -341,13 +336,30 @@ public class MainActivity extends AppCompatActivity {
         dialog = dialogBuilder.create();
         dialog.show();
 
+        SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+        newcontactpopup_firstname.setText(mySPR.getString("vornameKey", ""));
+        newcontactpopup_lastname.setText(mySPR.getString("nachnameKey", ""));
+
+
+
         button_save.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //hier muss noch der Save button implementiert werden
+                String n = newcontactpopup_firstname.getText().toString();
+                String ph = newcontactpopup_lastname.getText().toString();
+                SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+
+                SharedPreferences.Editor editor = mySPR.edit();
+
+                editor.putString("vornameKey", n);
+                editor.putString("nachnameKey", ph);
+                editor.commit();
             }
+
         });
 
+
+        
         button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
