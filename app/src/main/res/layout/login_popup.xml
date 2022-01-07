@@ -26,7 +26,9 @@
         android:hint="First Name"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="24dp" />
+        android:textSize="24dp"
+        
+        />
 
     <EditText
         android:id="@+id/nachname_text"

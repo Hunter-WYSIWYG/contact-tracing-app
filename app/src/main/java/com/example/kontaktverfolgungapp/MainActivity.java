@@ -86,17 +86,28 @@ public class MainActivity extends AppCompatActivity {
             button_Save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    String n = newVorname.getText().toString();
+                    String ph = newNachname.getText().toString();
+
+
 
                     if(newVorname.length()==0){
                         newVorname.setError("Vorname eingeben");
                     }
+                    else if(!n.matches("[a-zA-z]+")){
+
+                        newVorname.setError("Es sind nur Buchstaben erlaubt!");
+                    }
                     else if(newNachname.length()==0){
                         newNachname.setError("Nachname eingebn");
                     }
-                    else{
+                    else if(!n.matches("[a-zA-z]+")){
 
-                        String n = newVorname.getText().toString();
-                        String ph = newNachname.getText().toString();
+                        newNachname.setError("Es sind nur Buchstaben erlaubt!");
+                    }
+
+
+                    else{
                         SharedPreferences mySPR = getSharedPreferences("My", 0);
 
                         SharedPreferences.Editor editor = mySPR.edit();
@@ -115,7 +126,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    dialog.dismiss();
+
+                    System.exit(0);
                 }
             });
             //test
@@ -164,6 +176,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
 //----------Speichern des namen-----------------
     /*@Override
     protected void onStop() {
@@ -358,16 +372,24 @@ public class MainActivity extends AppCompatActivity {
         button_save.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
+                String n = newcontactpopup_firstname.getText().toString();
+                String ph = newcontactpopup_lastname.getText().toString();
                 if(newcontactpopup_firstname.length()==0){
                     newcontactpopup_firstname.setError("Vorname eingeben");
+                }
+                else if(!n.matches("[a-zA-z]+")){
+
+                    newcontactpopup_firstname.setError("Es sind nur Buchstaben erlaubt!");
                 }
                 else if(newcontactpopup_lastname.length()==0){
                     newcontactpopup_lastname.setError("Nachname eingebn");
                 }
+                else if(!ph.matches("[a-zA-z]+")){
+
+                    newcontactpopup_lastname.setError("Es sind nur Buchstaben erlaubt!");
+                }
                 else{
-                String n = newcontactpopup_firstname.getText().toString();
-                String ph = newcontactpopup_lastname.getText().toString();
+
                 SharedPreferences mySPR = getSharedPreferences("My", 0);
 
                 SharedPreferences.Editor editor = mySPR.edit();
