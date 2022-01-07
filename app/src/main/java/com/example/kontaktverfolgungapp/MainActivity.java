@@ -86,15 +86,28 @@ public class MainActivity extends AppCompatActivity {
             button_Save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String n = newVorname.getText().toString();
-                    String ph = newNachname.getText().toString();
-                    SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
 
-                    SharedPreferences.Editor editor = mySPR.edit();
+                    if(newVorname.length()==0){
+                        newVorname.setError("Vorname eingeben");
+                    }
+                    else if(newNachname.length()==0){
+                        newNachname.setError("Nachname eingebn");
+                    }
+                    else{
 
-                    editor.putString("vornameKey", n);
-                    editor.putString("nachnameKey", ph);
-                    editor.commit();
+                        String n = newVorname.getText().toString();
+                        String ph = newNachname.getText().toString();
+                        SharedPreferences mySPR = getSharedPreferences("My", 0);
+
+                        SharedPreferences.Editor editor = mySPR.edit();
+
+                        editor.putString("vornameKey", n);
+                        editor.putString("nachnameKey", ph);
+                        editor.commit();
+                        dialog.dismiss();
+                    }
+
+
                 }
             });
 
@@ -109,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
 //-------------Name beim öffnen laden------------
             //Shared Pref Datei öffnen
-            SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+            SharedPreferences mySPR = getSharedPreferences("My", 0);
 //Werte aus Datei in Textfelder
             newVorname.setText(mySPR.getString("vornameKey", ""));
             newNachname.setText(mySPR.getString("nachnameKey", ""));
@@ -336,7 +349,7 @@ public class MainActivity extends AppCompatActivity {
         dialog = dialogBuilder.create();
         dialog.show();
 
-        SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+        SharedPreferences mySPR = getSharedPreferences("My", 0);
         newcontactpopup_firstname.setText(mySPR.getString("vornameKey", ""));
         newcontactpopup_lastname.setText(mySPR.getString("nachnameKey", ""));
 
@@ -345,15 +358,24 @@ public class MainActivity extends AppCompatActivity {
         button_save.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+
+                if(newcontactpopup_firstname.length()==0){
+                    newcontactpopup_firstname.setError("Vorname eingeben");
+                }
+                else if(newcontactpopup_lastname.length()==0){
+                    newcontactpopup_lastname.setError("Nachname eingebn");
+                }
+                else{
                 String n = newcontactpopup_firstname.getText().toString();
                 String ph = newcontactpopup_lastname.getText().toString();
-                SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+                SharedPreferences mySPR = getSharedPreferences("My", 0);
 
                 SharedPreferences.Editor editor = mySPR.edit();
 
                 editor.putString("vornameKey", n);
                 editor.putString("nachnameKey", ph);
                 editor.commit();
+                dialog.dismiss();}
             }
 
         });
