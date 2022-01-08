@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     String ph = newNachname.getText().toString();
 
 
-
+                    //validate names
                     if(newVorname.length()==0){
                         newVorname.setError("Vorname eingeben");
                     }
@@ -108,13 +108,16 @@ public class MainActivity extends AppCompatActivity {
 
 
                     else{
-                        SharedPreferences mySPR = getSharedPreferences("My", 0);
-
+                        //Shared Pref Datei öffnen
+                        SharedPreferences mySPR = getSharedPreferences("Pref", 0);
+                        //Editor Klasse initiaisieren
                         SharedPreferences.Editor editor = mySPR.edit();
 
                         editor.putString("vornameKey", n);
                         editor.putString("nachnameKey", ph);
+                        //speichern
                         editor.commit();
+                        //schließen des Fensters
                         dialog.dismiss();
                     }
 
@@ -134,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
 //-------------Name beim öffnen laden------------
             //Shared Pref Datei öffnen
-            SharedPreferences mySPR = getSharedPreferences("My", 0);
+            SharedPreferences mySPR = getSharedPreferences("Pref", 0);
 //Werte aus Datei in Textfelder
             newVorname.setText(mySPR.getString("vornameKey", ""));
             newNachname.setText(mySPR.getString("nachnameKey", ""));
@@ -178,23 +181,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//----------Speichern des namen-----------------
-    /*@Override
-    protected void onStop() {
-        super.onStop();
-        //Shared Pref Datei öffnen
-        SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
-        //Editor Klasse initiaisieren
-        SharedPreferences.Editor editor= mySPR.edit();
 
-        editor.putString("myKey1", newVorname.getText().toString());
-        editor.putString("myKey2", newNachname.getText().toString());
-
-        //speichern
-
-        editor.commit();
-    }
-*/
 
     private void askPermission(){
 
@@ -362,8 +349,9 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setView(contactPopupView);
         dialog = dialogBuilder.create();
         dialog.show();
-
-        SharedPreferences mySPR = getSharedPreferences("My", 0);
+        //Shared Pref Datei öffnen
+        SharedPreferences mySPR = getSharedPreferences("Pref", 0);
+        //gespeicherte Namen aus der Datei laden
         newcontactpopup_firstname.setText(mySPR.getString("vornameKey", ""));
         newcontactpopup_lastname.setText(mySPR.getString("nachnameKey", ""));
 
@@ -374,30 +362,38 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String n = newcontactpopup_firstname.getText().toString();
                 String ph = newcontactpopup_lastname.getText().toString();
+                //überprüfen ob Vorname-Eingabe leer ist
                 if(newcontactpopup_firstname.length()==0){
                     newcontactpopup_firstname.setError("Vorname eingeben");
                 }
+                //überprüfen ob sonderzeichen enthaletn sind
                 else if(!n.matches("[a-zA-z]+")){
 
                     newcontactpopup_firstname.setError("Es sind nur Buchstaben erlaubt!");
                 }
+                //überprüfen ob Nachname-Eingabe leer ist
                 else if(newcontactpopup_lastname.length()==0){
                     newcontactpopup_lastname.setError("Nachname eingebn");
                 }
+                //überprüfen ob sonderzeichen enthaletn sind
                 else if(!ph.matches("[a-zA-z]+")){
 
                     newcontactpopup_lastname.setError("Es sind nur Buchstaben erlaubt!");
                 }
                 else{
-
-                SharedPreferences mySPR = getSharedPreferences("My", 0);
-
+                //Shared Pref Datei öffnen
+                SharedPreferences mySPR = getSharedPreferences("Pref", 0);
+                //Editor Klasse initiaisieren
                 SharedPreferences.Editor editor = mySPR.edit();
 
                 editor.putString("vornameKey", n);
                 editor.putString("nachnameKey", ph);
+                    //speichern
                 editor.commit();
+                //schließen
                 dialog.dismiss();}
+
+
             }
 
         });
