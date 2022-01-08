@@ -67,57 +67,80 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
-
-
-
-
 //-------Login--------------------------------------------------------------------------------
 
-    dialogBuilder = new AlertDialog.Builder(this);
-    final View loginPopupView = getLayoutInflater().inflate(R.layout.login_popup, null);
-    newVorname = (EditText) loginPopupView.findViewById(R.id.vorname_text);
-    newNachname = (EditText)  loginPopupView.findViewById(R.id.nachname_text);
+            dialogBuilder = new AlertDialog.Builder(this);
+            final View loginPopupView = getLayoutInflater().inflate(R.layout.login_popup, null);
+            newVorname = (EditText) loginPopupView.findViewById(R.id.vorname_text);
+            newNachname = (EditText) loginPopupView.findViewById(R.id.nachname_text);
 
-    textView = (TextView)  loginPopupView.findViewById(R.id.loginTextView);
+            textView = (TextView) loginPopupView.findViewById(R.id.loginTextView);
 
-    button_Save = (Button) loginPopupView.findViewById(R.id.save_Button);
-    button_Cancel = (Button) loginPopupView.findViewById(R.id.cancel_Button);
+            button_Save = (Button) loginPopupView.findViewById(R.id.save_Button);
+            button_Cancel = (Button) loginPopupView.findViewById(R.id.cancel_Button);
 
-    dialogBuilder.setView(loginPopupView);
-    dialog = dialogBuilder.create();
-    dialog.show();
+            dialogBuilder.setView(loginPopupView);
+            dialog = dialogBuilder.create();
+            dialog.show();
 
-    button_Save.setOnClickListener(new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            String n  = newVorname.getText().toString();
-            String ph  = newNachname.getText().toString();
-            SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+            button_Save.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String n = newVorname.getText().toString();
+                    String ph = newNachname.getText().toString();
 
-            SharedPreferences.Editor editor = mySPR.edit();
 
-            editor.putString("vornameKey", n);
-            editor.putString("nachnameKey", ph);
-            editor.commit();
-        }
-    });
+                    //validate names
+                    if(newVorname.length()==0){
+                        newVorname.setError("Vorname eingeben");
+                    }
+                    else if(!n.matches("[a-zA-z]+")){
 
-    button_Cancel.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+                        newVorname.setError("Es sind nur Buchstaben erlaubt!");
+                    }
+                    else if(newNachname.length()==0){
+                        newNachname.setError("Nachname eingebn");
+                    }
+                    else if(!n.matches("[a-zA-z]+")){
 
-            dialog.dismiss();
-        }
-    });
+                        newNachname.setError("Es sind nur Buchstaben erlaubt!");
+                    }
+
+
+                    else{
+                        //Shared Pref Datei öffnen
+                        SharedPreferences mySPR = getSharedPreferences("Pref", 0);
+                        //Editor Klasse initiaisieren
+                        SharedPreferences.Editor editor = mySPR.edit();
+
+                        editor.putString("vornameKey", n);
+                        editor.putString("nachnameKey", ph);
+                        //speichern
+                        editor.commit();
+                        //schließen des Fensters
+                        dialog.dismiss();
+                    }
+
+
+                }
+            });
+
+            button_Cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    System.exit(0);
+                }
+            });
+            //test
 
 //-------------Name beim öffnen laden------------
-        //Shared Pref Datei öffnen
-        SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
+            //Shared Pref Datei öffnen
+            SharedPreferences mySPR = getSharedPreferences("Pref", 0);
 //Werte aus Datei in Textfelder
-        newVorname.setText(mySPR.getString("vornameKey",""));
-        newNachname.setText(mySPR.getString("nachnameKey",""));
-
+            newVorname.setText(mySPR.getString("vornameKey", ""));
+            newNachname.setText(mySPR.getString("nachnameKey", ""));
 
 //-------QR-Code--------------------------------------------------------------------------------
 
@@ -156,23 +179,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-//----------Speichern des namen-----------------
-    /*@Override
-    protected void onStop() {
-        super.onStop();
-        //Shared Pref Datei öffnen
-        SharedPreferences mySPR = getSharedPreferences("MySPPILE", 0);
-        //Editor Klasse initiaisieren
-        SharedPreferences.Editor editor= mySPR.edit();
 
-        editor.putString("myKey1", newVorname.getText().toString());
-        editor.putString("myKey2", newNachname.getText().toString());
 
-        //speichern
 
-        editor.commit();
-    }
-*/
 
     private void askPermission(){
 
@@ -328,6 +337,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createNewContactDialog (){
+
         dialogBuilder = new AlertDialog.Builder(this);
         final View contactPopupView = getLayoutInflater().inflate(R.layout.popup, null);
         newcontactpopup_firstname = (EditText) contactPopupView.findViewById(R.id.newcontactpopup_firstname);
@@ -339,14 +349,57 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setView(contactPopupView);
         dialog = dialogBuilder.create();
         dialog.show();
+        //Shared Pref Datei öffnen
+        SharedPreferences mySPR = getSharedPreferences("Pref", 0);
+        //gespeicherte Namen aus der Datei laden
+        newcontactpopup_firstname.setText(mySPR.getString("vornameKey", ""));
+        newcontactpopup_lastname.setText(mySPR.getString("nachnameKey", ""));
+
+
 
         button_save.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //hier muss noch der Save button implementiert werden
+                String n = newcontactpopup_firstname.getText().toString();
+                String ph = newcontactpopup_lastname.getText().toString();
+                //überprüfen ob Vorname-Eingabe leer ist
+                if(newcontactpopup_firstname.length()==0){
+                    newcontactpopup_firstname.setError("Vorname eingeben");
+                }
+                //überprüfen ob sonderzeichen enthaletn sind
+                else if(!n.matches("[a-zA-z]+")){
+
+                    newcontactpopup_firstname.setError("Es sind nur Buchstaben erlaubt!");
+                }
+                //überprüfen ob Nachname-Eingabe leer ist
+                else if(newcontactpopup_lastname.length()==0){
+                    newcontactpopup_lastname.setError("Nachname eingebn");
+                }
+                //überprüfen ob sonderzeichen enthaletn sind
+                else if(!ph.matches("[a-zA-z]+")){
+
+                    newcontactpopup_lastname.setError("Es sind nur Buchstaben erlaubt!");
+                }
+                else{
+                //Shared Pref Datei öffnen
+                SharedPreferences mySPR = getSharedPreferences("Pref", 0);
+                //Editor Klasse initiaisieren
+                SharedPreferences.Editor editor = mySPR.edit();
+
+                editor.putString("vornameKey", n);
+                editor.putString("nachnameKey", ph);
+                    //speichern
+                editor.commit();
+                //schließen
+                dialog.dismiss();}
+
+
             }
+
         });
 
+
+        
         button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

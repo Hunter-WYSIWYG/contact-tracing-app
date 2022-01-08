@@ -23,10 +23,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="19dp"
         android:gravity="center_horizontal"
-        android:hint="Last Name"
+        android:hint="First Name"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="24dp" />
+        android:textSize="24dp"
+        
+        />
 
     <EditText
         android:id="@+id/nachname_text"
