@@ -27,7 +27,7 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="24dp"
-        
+
         />
 
     <EditText
@@ -41,15 +41,6 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="24dp" />
-
-    <Button
-        android:id="@+id/cancel_Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/nachname_text"
-        android:layout_marginLeft="60dp"
-        android:layout_marginTop="43dp"
-        android:text="cancel" />
 
     <Button
         android:id="@+id/save_Button"

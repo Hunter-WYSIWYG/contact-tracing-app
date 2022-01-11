@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
             textView = (TextView) loginPopupView.findViewById(R.id.loginTextView);
 
             button_Save = (Button) loginPopupView.findViewById(R.id.save_Button);
-            button_Cancel = (Button) loginPopupView.findViewById(R.id.cancel_Button);
+
+
 
             dialogBuilder.setView(loginPopupView);
             dialog = dialogBuilder.create();
@@ -125,14 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            button_Cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-
-                    System.exit(0);
-                }
-            });
             //test
 
 //-------------Name beim öffnen laden------------
