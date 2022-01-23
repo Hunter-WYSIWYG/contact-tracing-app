@@ -18,7 +18,7 @@ public class ClientApp {
 
     //call this function once before using other functions of the API
     //confirm that it returns true
-    public boolean initServerConnection() throws IOException {
+    public static boolean initServerConnection() {
         try {
             Client.sendMessage(getPublicIP(), serverIP, clientPORT);
             System.out.println("ip succesfully send to server");
@@ -33,17 +33,24 @@ public class ClientApp {
         }
     }
 
-    public static double scanQR(int UID, int PID, String DateTime) throws IOException {
+    public static double scanQR(int UID, int PID, String DateTime) {
         String msg = "scanQR;" + UID + ";" + PID + ";" + DateTime;
-        Client.sendMessage(msg, serverIP, clientPORT);
+        try {
+            Client.sendMessage(msg, serverIP, clientPORT);
+        } catch (IOException e) {
+            return 0.0;
+        }
         msg = Client.receiveMessage(serverPORT);
-
         return Double.parseDouble(msg);
     }
 
-    public static int newUser(String NewUser) throws IOException {
+    public static int newUser(String NewUser) {
         String msg = "newUser;" + NewUser;
-        Client.sendMessage(msg, serverIP, clientPORT);
+        try {
+            Client.sendMessage(msg, serverIP, clientPORT);
+        } catch (IOException e) {
+            return 0;
+        }
         msg = Client.receiveMessage(serverPORT);
 
         return Integer.parseInt(msg);
@@ -54,12 +61,17 @@ public class ClientApp {
         Client.sendMessage(msg, serverIP, clientPORT);
     }
 
-    public static ArrayList<Visit> loadVisits(int UID) throws IOException {
+    public static ArrayList<Visit> loadVisits(int UID) {
         String msg = "loadVisits;" + UID;
-        Client.sendMessage(msg, serverIP, clientPORT);
+        ArrayList<Visit> visits = new ArrayList<Visit>();
+        try {
+            Client.sendMessage(msg, serverIP, clientPORT);
+        } catch (IOException e) {
+            return visits;
+        }
         msg = Client.receiveMessage(serverPORT);
 
-        ArrayList<Visit> visits = new ArrayList<Visit>();
+
 
         if (msg.isEmpty()) {
             return visits;
@@ -82,9 +94,14 @@ public class ClientApp {
         return visits;
     }
 
-    public static String[] loadMetPeople(int PID, String DateTime) throws IOException {
+    public static String[] loadMetPeople(int PID, String DateTime) {
         String msg = "loadMetPeople;" + PID + ";" + DateTime;
-        Client.sendMessage(msg, serverIP, clientPORT);
+
+        try {
+            Client.sendMessage(msg, serverIP, clientPORT);
+        } catch (IOException e) {
+            return new String[0];
+        }
         msg = Client.receiveMessage(serverPORT);
 
         String[] metPeople = msg.split(";");

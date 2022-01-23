@@ -29,8 +29,10 @@ import android.widget.Toast;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.example.kontaktverfolgungapp.dbclient.ClientApp;
 import com.google.zxing.Result;
 
+import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -65,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        if (!ClientApp.initServerConnection()) {
+            Toast.makeText(MainActivity.this, "Serververbindung konnte nicht initialisiert werden.", Toast.LENGTH_LONG).show();
+        }
 
 //-------Login--------------------------------------------------------------------------------
 
@@ -107,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
                         newNachname.setError("Es sind nur Buchstaben erlaubt!");
                     }
 
-
                     else{
                         //Shared Pref Datei öffnen
                         SharedPreferences mySPR = getSharedPreferences("Pref", 0);
@@ -118,6 +121,12 @@ public class MainActivity extends AppCompatActivity {
                         editor.putString("nachnameKey", ph);
                         //speichern
                         editor.commit();
+                        int UID = ClientApp.newUser(n+";"+ph+";");
+                        if (UID == 0) {
+                            Toast.makeText(MainActivity.this, "Nutzer konnte nicht abgespeichert werden.", Toast.LENGTH_LONG).show();
+                        } else {
+                            editor.putInt("UID", UID);
+                        }
                         //schließen des Fensters
                         dialog.dismiss();
                     }
@@ -384,6 +393,17 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("nachnameKey", ph);
                     //speichern
                 editor.commit();
+                int UID = mySPR.getInt("UID", 0);
+                if (UID != 0) {
+                    try {
+                        ClientApp.setName(UID, n + ";" + ph + ";");
+                    } catch (IOException e) {
+                        Toast.makeText(MainActivity.this, "Ihr Name konnte nicht auf dem Server geändert werden.", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Ihre UID konnte nicht abgerufen werden.", Toast.LENGTH_LONG).show();
+                }
+
                 //schließen
                 dialog.dismiss();}
 
