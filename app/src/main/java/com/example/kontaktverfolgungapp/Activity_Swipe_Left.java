@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -167,11 +168,51 @@ public class Activity_Swipe_Left extends AppCompatActivity {
         dialog = dialogBuilder.create();
         dialog.show();
 
+
+        //Shared Pref Datei öffnen
+        SharedPreferences mySPR = getSharedPreferences("Pref", 0);
+        //gespeicherte Namen aus der Datei laden
+        newcontactpopup_firstname.setText(mySPR.getString("vornameKey", ""));
+        newcontactpopup_lastname.setText(mySPR.getString("nachnameKey", ""));
+
+
         button_save.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //hier muss noch der Save button implementiert werden
-            }
+                    String n = newcontactpopup_firstname.getText().toString();
+                    String ph = newcontactpopup_lastname.getText().toString();
+                    //überprüfen ob Vorname-Eingabe leer ist
+                    if(newcontactpopup_firstname.length()==0){
+                        newcontactpopup_firstname.setError("Vorname eingeben");
+                    }
+                    //überprüfen ob sonderzeichen enthaletn sind
+                    else if(!n.matches("[a-zA-z]+")){
+
+                        newcontactpopup_firstname.setError("Es sind nur Buchstaben erlaubt!");
+                    }
+                    //überprüfen ob Nachname-Eingabe leer ist
+                    else if(newcontactpopup_lastname.length()==0){
+                        newcontactpopup_lastname.setError("Nachname eingebn");
+                    }
+                    //überprüfen ob sonderzeichen enthaletn sind
+                    else if(!ph.matches("[a-zA-z]+")){
+
+                        newcontactpopup_lastname.setError("Es sind nur Buchstaben erlaubt!");
+                    }
+                    else{
+                        //Shared Pref Datei öffnen
+                        SharedPreferences mySPR = getSharedPreferences("Pref", 0);
+                        //Editor Klasse initiaisieren
+                        SharedPreferences.Editor editor = mySPR.edit();
+
+                        editor.putString("vornameKey", n);
+                        editor.putString("nachnameKey", ph);
+                        //speichern
+                        editor.commit();
+                        //schließen
+                        dialog.dismiss();}
+
+                }
         });
 
         button_cancel.setOnClickListener(new View.OnClickListener() {
