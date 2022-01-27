@@ -24,12 +24,6 @@ import java.util.List;
 
 public class Activity_Swipe_Left extends AppCompatActivity {
 
-//-------Gesture--------------------------------------------------------------------------------
-
-    private float x1,x2;
-    static final int MIN_DISTANCE = 50;
-
-
 //-------Menu--------------------------------------------------------------------------------
 
     private AlertDialog.Builder dialogBuilder;
@@ -106,34 +100,6 @@ public class Activity_Swipe_Left extends AppCompatActivity {
 
     }
 
-//-------Gesture--------------------------------------------------------------------------------
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event)
-    {
-        switch(event.getAction())
-        {
-            case MotionEvent.ACTION_DOWN:
-                x1 = event.getX();
-                break;
-            case MotionEvent.ACTION_UP:
-                x2 = event.getX();
-                float deltaX = x2 - x1;
-                if (Math.abs(deltaX) > MIN_DISTANCE)
-                {
-                    // Right to Left swipe action
-                    if (x2 < x1)
-                    {
-                        Intent i = new Intent(Activity_Swipe_Left.this, MainActivity.class);
-                        startActivity(i);
-                    }
-
-                }
-
-                break;
-        }
-        return super.onTouchEvent(event);
-    }
 
 //-------Menu--------------------------------------------------------------------------------
 

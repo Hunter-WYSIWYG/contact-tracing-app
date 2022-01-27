@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/list_parent"
+        android:id="@+id/list_name"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:paddingLeft="?android:attr/expandableListPreferredChildIndicatorLeft"
-
-        android:text="Medium Text"
-
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginLeft="40sp"
+        android:text="Group"
         android:padding="2dp"
         android:textColor="#4d4d4d"
-        />
+        android:layout_weight="8"/>
 
+    <!--  <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:id="@+id/list_datum"
+          android:padding="2dp"
+          android:layout_weight="12"
 
+          android:gravity="right"
+          android:text="Datum"
+          android:textColor="#4d4d4d"/> -->
 
 
 </LinearLayout>
