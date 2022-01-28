@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText newVorname, newNachname;
     private TextView textView;
-    private Button button_Cancel, button_Save;
+    private Button  button_Save;
 
 //-------QR-Code--------------------------------------------------------------------------------
 
@@ -121,12 +121,15 @@ public class MainActivity extends AppCompatActivity {
                         editor.putString("nachnameKey", ph);
                         //speichern
                         editor.commit();
+
+                        //database integrated for newUser
+                        /*
                         int UID = ClientApp.newUser(n+";"+ph+";");
                         if (UID == 0) {
                             Toast.makeText(MainActivity.this, "Nutzer konnte nicht abgespeichert werden.", Toast.LENGTH_LONG).show();
                         } else {
                             editor.putInt("UID", UID);
-                        }
+                        }*/
                         //schließen des Fensters
                         dialog.dismiss();
                     }
@@ -288,14 +291,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
+        //  Returns the integer constants MotionEvent.ACTION_DOWN and MotionEvent.ACTION_UP
         switch(event.getAction())
         {
+            // starting to swipe time gesture
             case MotionEvent.ACTION_DOWN:
-                x1 = event.getX();
+                x1 = event.getX();  //Returns the x coordinate of the touch event
                 break;
+
+            // ending time swipe gesture
             case MotionEvent.ACTION_UP:
-                x2 = event.getX();
-                float deltaX = x2 - x1;
+                x2 = event.getX();  //Returns the x coordinate of the touch event
+                float deltaX = x2 - x1; //getting value for horizontal swipe
                 if (Math.abs(deltaX) > MIN_DISTANCE)
                 {
                     // Left to Right swipe action
@@ -304,14 +311,6 @@ public class MainActivity extends AppCompatActivity {
                         Intent i = new Intent(MainActivity.this, Activity_Swipe_Left.class);
                         startActivity(i);
                     }
-
-                    // Right to left swipe action
-                  /*  else
-                    {
-                        Intent i = new Intent(MainActivity.this, Activity_Swipe_Right.class);
-                        startActivity(i);
-                    }*/
-
                 }
 
                 break;
@@ -393,7 +392,9 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("nachnameKey", ph);
                     //speichern
                 editor.commit();
-                int UID = mySPR.getInt("UID", 0);
+
+                // database integrated for setName
+          /*      int UID = mySPR.getInt("UID", 0);
                 if (UID != 0) {
                     try {
                         ClientApp.setName(UID, n + ";" + ph + ";");
@@ -402,7 +403,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(MainActivity.this, "Ihre UID konnte nicht abgerufen werden.", Toast.LENGTH_LONG).show();
-                }
+                }*/
 
                 //schließen
                 dialog.dismiss();}
