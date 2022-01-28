@@ -80,7 +80,7 @@ public class MainAdapter extends BaseExpandableListAdapter {
         TextView list_name = (TextView) convertView.findViewById(R.id.list_name);
 
         list_name.setText(group);
-        //   list_datum.setText(String.valueOf(getChildrenDatum(groupPosition)));
+        //list_datum.setText(String.valueOf(getChildrenDatum(groupPosition)));
         return convertView;
     }
 

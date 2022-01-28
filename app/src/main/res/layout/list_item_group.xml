@@ -13,7 +13,7 @@
         android:paddingLeft="40dp"
         android:layout_weight="7"/>
 
-    <TextView
+   <!-- <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/list_child_datum_item"
@@ -21,7 +21,7 @@
         android:textSize="20sp"
         android:gravity="right"
         android:text="Datum"
-        android:layout_weight="16"/>
+        android:layout_weight="16"/> -->
 
 
 </LinearLayout>

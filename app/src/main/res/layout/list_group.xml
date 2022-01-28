@@ -18,16 +18,17 @@
         android:textColor="#4d4d4d"
         android:layout_weight="8"/>
 
-    <!--  <TextView
+      <TextView
           android:layout_width="0dp"
           android:layout_height="wrap_content"
           android:id="@+id/list_datum"
           android:padding="2dp"
           android:layout_weight="12"
-
+          android:layout_marginRight="20dp"
+          android:textSize="20sp"
           android:gravity="right"
           android:text="Datum"
-          android:textColor="#4d4d4d"/> -->
+          android:textColor="#4d4d4d"/>
 
 
 </LinearLayout>

@@ -14,13 +14,13 @@
         android:layout_weight="8"
         android:text="Group"/>
 
-    <TextView
+   <!-- <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/list_child_datum"
         android:textSize="20sp"
         android:gravity="right"
         android:layout_marginRight="40dp"
-        android:text="Datum"/>
+        android:text="Datum"/> -->
 
 </LinearLayout>
