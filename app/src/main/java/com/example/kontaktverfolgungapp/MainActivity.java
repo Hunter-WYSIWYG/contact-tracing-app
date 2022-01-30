@@ -33,6 +33,8 @@ import com.example.kontaktverfolgungapp.dbclient.ClientApp;
 import com.google.zxing.Result;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -176,7 +178,14 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
-
+                            //TODO: pid aus result abrufen
+                            int PID= 1;
+                            SharedPreferences mySPR = getSharedPreferences("Pref", 0);
+                            int UID = mySPR.getInt("UID", 0);
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            Date date = new Date(result.getTimestamp());
+                            String dateTime = simpleDateFormat.format(date);
+                            ClientApp.scanQR(UID, PID, dateTime);
                             Toast.makeText(MainActivity.this, result.getText(), Toast.LENGTH_LONG).show();
                         }
                     });

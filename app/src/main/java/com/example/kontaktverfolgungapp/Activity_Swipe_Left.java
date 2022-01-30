@@ -5,19 +5,22 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
+
+import com.example.kontaktverfolgungapp.dbclient.ClientApp;
+import com.example.kontaktverfolgungapp.dbclient.Visit;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,8 +37,8 @@ public class Activity_Swipe_Left extends AppCompatActivity {
 //-------List View--------------------------------------------------------------------------------
 
     ExpandableListView expandableListView;
-    List<String> listGroup;
-    HashMap<String, List<String >> listItem;
+    List<Visit> places;
+    HashMap<String, List<String >> metPeopleAtPlace;
     MainAdapter adapter;
 
     @Override
@@ -44,57 +47,75 @@ public class Activity_Swipe_Left extends AppCompatActivity {
         setContentView(R.layout.activity_swipe_left);
 
         expandableListView = findViewById(R.id.expandable_listview);
-        listGroup = new ArrayList<>();
-        listItem = new HashMap<>();
-        adapter = new MainAdapter(this, listGroup, listItem);
+        places = new ArrayList<>();
+        metPeopleAtPlace = new HashMap<>();
+        adapter = new MainAdapter(this, places, metPeopleAtPlace);
         expandableListView.setAdapter(adapter);
+        //initTestListData();
         initListData();
     }
 
     private void initListData() {
-        listGroup.add(getString(R.string.group1));
-        listGroup.add(getString(R.string.group2));
-        listGroup.add(getString(R.string.group3));
-        listGroup.add(getString(R.string.group4));
-        listGroup.add(getString(R.string.group5));
+        SharedPreferences mySPR = getSharedPreferences("Pref", 0);
+        int UID = mySPR.getInt("UID", 0);
+        ArrayList<Visit> visits = ClientApp.loadVisits(UID);
+        if (visits.size() == 0) {
+            Toast.makeText(Activity_Swipe_Left.this, "Es wurden keine Visits abgerufen.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
-        String [] array;
+        for (Visit visit : visits) {
+            int PID = visit.getPID();
+            String dateTime = visit.getDateTime();
+            String[] metPeopleNames = ClientApp.loadMetPeople(PID, dateTime);
+            metPeopleAtPlace.put(visit.getPlaceName(), Arrays.asList(metPeopleNames));
+        }
+    }
+
+    private void initTestListData() {
+        places.add(new Visit(0, "Cinemax", "2021-12-21 13:00:00", 1.5));
+        places.add(new Visit(0, "Theater", "2021-12-21 13:00:00", 1.5));
+        places.add(new Visit(0, "Mr. Pan", "2021-12-21 13:00:00", 1.5));
+        places.add(new Visit(0, "MLU", "2021-12-21 13:00:00", 1.5));
+        places.add(new Visit(0, "Irgendwas", "2021-12-21 13:00:00", 1.5));
+
+        String [] placesFromStringRessources;
 
         List<String> list1 = new ArrayList<>();
-        array = getResources().getStringArray(R.array.group1);
-        for (String item: array){
+        placesFromStringRessources = getResources().getStringArray(R.array.group1);
+        for (String item: placesFromStringRessources){
             list1.add(item);
         }
 
         List<String> list2 = new ArrayList<>();
-        array = getResources().getStringArray(R.array.group2);
-        for (String item: array){
+        placesFromStringRessources = getResources().getStringArray(R.array.group2);
+        for (String item: placesFromStringRessources){
             list2.add(item);
         }
 
         List<String> list3 = new ArrayList<>();
-        array = getResources().getStringArray(R.array.group3);
-        for (String item: array){
+        placesFromStringRessources = getResources().getStringArray(R.array.group3);
+        for (String item: placesFromStringRessources){
             list3.add(item);
         }
 
         List<String> list4 = new ArrayList<>();
-        array = getResources().getStringArray(R.array.group4);
-        for (String item: array){
+        placesFromStringRessources = getResources().getStringArray(R.array.group4);
+        for (String item: placesFromStringRessources){
             list4.add(item);
         }
 
         List<String> list5 = new ArrayList<>();
-        array = getResources().getStringArray(R.array.group5);
-        for (String item: array){
+        placesFromStringRessources = getResources().getStringArray(R.array.group5);
+        for (String item: placesFromStringRessources){
             list5.add(item);
         }
 
-        listItem.put(listGroup.get(0),list1);
-        listItem.put(listGroup.get(1),list2);
-        listItem.put(listGroup.get(2),list3);
-        listItem.put(listGroup.get(3),list4);
-        listItem.put(listGroup.get(4),list5);
+        metPeopleAtPlace.put(places.get(0).getPlaceName(),list1);
+        metPeopleAtPlace.put(places.get(1).getPlaceName(),list2);
+        metPeopleAtPlace.put(places.get(2).getPlaceName(),list3);
+        metPeopleAtPlace.put(places.get(3).getPlaceName(),list4);
+        metPeopleAtPlace.put(places.get(4).getPlaceName(),list5);
 
         adapter.notifyDataSetChanged();
 
@@ -175,6 +196,17 @@ public class Activity_Swipe_Left extends AppCompatActivity {
                         editor.putString("nachnameKey", ph);
                         //speichern
                         editor.commit();
+                        // database integrated for setName
+                        /* int UID = mySPR.getInt("UID", 0);
+                        if (UID != 0) {
+                            try {
+                                ClientApp.setName(UID, n + ";" + ph + ";");
+                            } catch (IOException e) {
+                                Toast.makeText(MainActivity.this, "Ihr Name konnte nicht auf dem Server geändert werden.", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            Toast.makeText(MainActivity.this, "Ihre UID konnte nicht abgerufen werden.", Toast.LENGTH_LONG).show();
+                        }*/
                         //schließen
                         dialog.dismiss();}
 
