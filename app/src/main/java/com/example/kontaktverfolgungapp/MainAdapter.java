@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.kontaktverfolgungapp.dbclient.Visit;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,38 +15,38 @@ import java.util.List;
 public class MainAdapter extends BaseExpandableListAdapter {
 
     Context context;
-    List<String> listGroup;
+    List<Visit> visits;
     HashMap<String, List<String>> listItemGroups;
 
-    public MainAdapter(Context context, List<String> groups, HashMap<String, List <String>> itemsGroups){
+    public MainAdapter(Context context, List<Visit> groups, HashMap<String, List <String>> itemsGroups){
         // initialize class variables
         this.context = context;
-        listGroup = groups;
+        visits = groups;
         listItemGroups = itemsGroups;
     }
 
     @Override
     public int getGroupCount() {
         // returns groups count
-        return listGroup.size();
+        return visits.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
         // returns items count of a group
-        return listItemGroups.get(getGroup(groupPosition)).size();
+        return listItemGroups.get(((Visit)getGroup(groupPosition)).getPlaceName()).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
         // returns a group
-        return listGroup.get(groupPosition);
+        return visits.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         // returns a group item
-        return listItemGroups.get(getGroup(groupPosition)).get(childPosition);
+        return listItemGroups.get(((Visit)getGroup(groupPosition)).getPlaceName()).get(childPosition);
     }
 
     @Override
@@ -71,15 +71,17 @@ public class MainAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         // create main items (groups)
-        String group = (String)  getGroup(groupPosition);
+        Visit group = (Visit)  getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.list_group, null);
         }
 
         TextView list_name = (TextView) convertView.findViewById(R.id.list_name);
+        TextView list_date = (TextView) convertView.findViewById(R.id.list_datum);
 
-        list_name.setText(group);
+        list_name.setText(group.getPlaceName());
+        list_date.setText(group.getDateTime());
         //list_datum.setText(String.valueOf(getChildrenDatum(groupPosition)));
         return convertView;
     }

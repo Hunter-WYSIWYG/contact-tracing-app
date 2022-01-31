@@ -33,6 +33,8 @@ import com.example.kontaktverfolgungapp.dbclient.ClientApp;
 import com.google.zxing.Result;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -123,13 +125,13 @@ public class MainActivity extends AppCompatActivity {
                         editor.commit();
 
                         //database integrated for newUser
-                        /*
+                        
                         int UID = ClientApp.newUser(n+";"+ph+";");
                         if (UID == 0) {
                             Toast.makeText(MainActivity.this, "Nutzer konnte nicht abgespeichert werden.", Toast.LENGTH_LONG).show();
                         } else {
                             editor.putInt("UID", UID);
-                        }*/
+                        }
                         //schließen des Fensters
                         dialog.dismiss();
                     }
@@ -176,7 +178,14 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
-
+                            //TODO: pid aus result abrufen
+                            int PID= 1;
+                            SharedPreferences mySPR = getSharedPreferences("Pref", 0);
+                            int UID = mySPR.getInt("UID", 0);
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                            Date date = new Date(result.getTimestamp());
+                            String dateTime = simpleDateFormat.format(date);
+                            ClientApp.scanQR(UID, PID, dateTime);
                             Toast.makeText(MainActivity.this, result.getText(), Toast.LENGTH_LONG).show();
                         }
                     });
@@ -394,7 +403,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.commit();
 
                 // database integrated for setName
-          /*      int UID = mySPR.getInt("UID", 0);
+                int UID = mySPR.getInt("UID", 0);
                 if (UID != 0) {
                     try {
                         ClientApp.setName(UID, n + ";" + ph + ";");
@@ -403,7 +412,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(MainActivity.this, "Ihre UID konnte nicht abgerufen werden.", Toast.LENGTH_LONG).show();
-                }*/
+                }
 
                 //schließen
                 dialog.dismiss();}
