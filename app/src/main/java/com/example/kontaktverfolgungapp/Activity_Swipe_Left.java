@@ -196,8 +196,9 @@ public class Activity_Swipe_Left extends AppCompatActivity {
                         editor.putString("nachnameKey", ph);
                         //speichern
                         editor.commit();
+                        
                         // database integrated for setName
-                        /* int UID = mySPR.getInt("UID", 0);
+                         int UID = mySPR.getInt("UID", 0);
                         if (UID != 0) {
                             try {
                                 ClientApp.setName(UID, n + ";" + ph + ";");
@@ -206,7 +207,7 @@ public class Activity_Swipe_Left extends AppCompatActivity {
                             }
                         } else {
                             Toast.makeText(MainActivity.this, "Ihre UID konnte nicht abgerufen werden.", Toast.LENGTH_LONG).show();
-                        }*/
+                        }
                         //schließen
                         dialog.dismiss();}
 

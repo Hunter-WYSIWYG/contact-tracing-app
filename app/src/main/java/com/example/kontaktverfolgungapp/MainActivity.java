@@ -125,13 +125,13 @@ public class MainActivity extends AppCompatActivity {
                         editor.commit();
 
                         //database integrated for newUser
-                        /*
+                        
                         int UID = ClientApp.newUser(n+";"+ph+";");
                         if (UID == 0) {
                             Toast.makeText(MainActivity.this, "Nutzer konnte nicht abgespeichert werden.", Toast.LENGTH_LONG).show();
                         } else {
                             editor.putInt("UID", UID);
-                        }*/
+                        }
                         //schließen des Fensters
                         dialog.dismiss();
                     }
@@ -403,7 +403,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.commit();
 
                 // database integrated for setName
-          /*      int UID = mySPR.getInt("UID", 0);
+                int UID = mySPR.getInt("UID", 0);
                 if (UID != 0) {
                     try {
                         ClientApp.setName(UID, n + ";" + ph + ";");
@@ -412,7 +412,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(MainActivity.this, "Ihre UID konnte nicht abgerufen werden.", Toast.LENGTH_LONG).show();
-                }*/
+                }
 
                 //schließen
                 dialog.dismiss();}
