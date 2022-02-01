@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.kontaktverfolgungapp.dbclient.ClientApp;
 import com.example.kontaktverfolgungapp.dbclient.Visit;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -203,10 +204,10 @@ public class Activity_Swipe_Left extends AppCompatActivity {
                             try {
                                 ClientApp.setName(UID, n + ";" + ph + ";");
                             } catch (IOException e) {
-                                Toast.makeText(MainActivity.this, "Ihr Name konnte nicht auf dem Server geändert werden.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(Activity_Swipe_Left.this, "Ihr Name konnte nicht auf dem Server geändert werden.", Toast.LENGTH_LONG).show();
                             }
                         } else {
-                            Toast.makeText(MainActivity.this, "Ihre UID konnte nicht abgerufen werden.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Activity_Swipe_Left.this, "Ihre UID konnte nicht abgerufen werden.", Toast.LENGTH_LONG).show();
                         }
                         //schließen
                         dialog.dismiss();}
