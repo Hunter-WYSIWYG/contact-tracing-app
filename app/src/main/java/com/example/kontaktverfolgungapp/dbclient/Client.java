@@ -66,6 +66,7 @@ public class Client {
         }
     }
 
+    //use this to receive msg
     public static String receiveMessage() {
         Thread listenThread = new Thread(new listenForNewMessage());
         listenThread.start();
@@ -112,6 +113,7 @@ public class Client {
         }
     }
 
+    //use this to send msg
     public static void sendMessage(String msg, String ip, int port) throws IOException {
         MessageSender messageSender = new MessageSender(ip, port);
         messageSender.execute(msg);

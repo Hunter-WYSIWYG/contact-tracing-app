@@ -7,22 +7,19 @@ import org.jsoup.nodes.Document;
 
 public class ClientApp {
 
-    final static String serverIP = "192.168.178.21";
+    final static String serverIP = "192.168.178.50";    //private ip of server
     final static int serverPORT = 49500;
     final static int clientPORT = 49501;
 
-    /*
-    IMPORTANT:
-    Client needs port forwarding on serverPort 49500 when connecting from a local network
-     */
-
     //call this function once before using other functions of the API
-    //confirm that it returns true
     public static void initServerConnection() {
         Thread myThread = new Thread(new Client.ReceiveMsgThread(serverPORT));
         myThread.start();
     }
 
+    /* Example:
+     * double timeframe = scanQR(1, 2, "2021-12-22 13:00:00");
+     */
     public static double scanQR(int UID, int PID, String DateTime) {
         String msg = "scanQR;" + UID + ";" + PID + ";" + DateTime;
         try {
@@ -38,17 +35,23 @@ public class ClientApp {
         String msg = "newUser;" + NewUser;
         try {
             Client.sendMessage(msg, serverIP, clientPORT);
+            System.out.println("TEST - message send");
         } catch (IOException e) {
             return 0;
         }
+        System.out.println("TEST - pre receive");
         msg = Client.receiveMessage();
-
+        System.out.println("TEST - post receive");
         return Integer.parseInt(msg);
     }
 
-    public static void setName(int UID, String NewName) throws IOException {
+    public static void setName(int UID, String NewName) {
         String msg = "setName;" + UID + ";" + NewName;
-        Client.sendMessage(msg, serverIP, clientPORT);
+        try {
+            Client.sendMessage(msg, serverIP, clientPORT);
+        } catch (IOException e) {
+            System.out.println("IOException: " + e);
+        }
     }
 
     public static ArrayList<Visit> loadVisits(int UID) {
@@ -97,18 +100,5 @@ public class ClientApp {
         String[] metPeople = msg.split(";");
 
         return metPeople;
-    }
-
-    private static String getPublicIP()
-    {
-        try {
-
-            Document doc = Jsoup.connect("http://www.checkip.org").get();
-            return doc.getElementById("yourip").select("h1").first().select("span").text();
-
-        } catch (IOException ex) {
-            System.out.println("IOException: " + ex);
-            return "error: no ip found";
-        }
     }
 }
