@@ -7,7 +7,7 @@ import org.jsoup.nodes.Document;
 
 public class ClientApp {
 
-    final static String serverIP = "79.234.8.233";
+    final static String serverIP = "192.168.178.21";
     final static int serverPORT = 49500;
     final static int clientPORT = 49501;
 
@@ -18,19 +18,9 @@ public class ClientApp {
 
     //call this function once before using other functions of the API
     //confirm that it returns true
-    public static boolean initServerConnection() {
-        try {
-            Client.sendMessage(getPublicIP(), serverIP, clientPORT);
-            System.out.println("ip succesfully send to server");
-            System.out.println("waiting for server to confirm connection");
-            if (Client.receiveMessage(49500).equals("connection confirmed")) {
-                return true;
-            }
-            return false;
-        } catch (IOException ex) {
-            System.out.println("IOException while connecting to server");
-            return false;
-        }
+    public static void initServerConnection() {
+        Thread myThread = new Thread(new Client.ReceiveMsgThread(serverPORT));
+        myThread.start();
     }
 
     public static double scanQR(int UID, int PID, String DateTime) {
@@ -40,7 +30,7 @@ public class ClientApp {
         } catch (IOException e) {
             return 0.0;
         }
-        msg = Client.receiveMessage(serverPORT);
+        msg = Client.receiveMessage();
         return Double.parseDouble(msg);
     }
 
@@ -51,7 +41,7 @@ public class ClientApp {
         } catch (IOException e) {
             return 0;
         }
-        msg = Client.receiveMessage(serverPORT);
+        msg = Client.receiveMessage();
 
         return Integer.parseInt(msg);
     }
@@ -69,7 +59,7 @@ public class ClientApp {
         } catch (IOException e) {
             return visits;
         }
-        msg = Client.receiveMessage(serverPORT);
+        msg = Client.receiveMessage();
 
 
 
@@ -102,7 +92,7 @@ public class ClientApp {
         } catch (IOException e) {
             return new String[0];
         }
-        msg = Client.receiveMessage(serverPORT);
+        msg = Client.receiveMessage();
 
         String[] metPeople = msg.split(";");
 
