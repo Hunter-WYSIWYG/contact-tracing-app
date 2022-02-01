@@ -69,9 +69,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (!ClientApp.initServerConnection()) {
-            Toast.makeText(MainActivity.this, "Serververbindung konnte nicht initialisiert werden.", Toast.LENGTH_LONG).show();
-        }
+
+        ClientApp.initServerConnection();
 
 //-------Login--------------------------------------------------------------------------------
 

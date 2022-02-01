@@ -7,32 +7,19 @@ import org.jsoup.nodes.Document;
 
 public class ClientApp {
 
-    final static String serverIP = "79.234.8.233";
+    final static String serverIP = "192.168.178.50";    //private ip of server
     final static int serverPORT = 49500;
     final static int clientPORT = 49501;
 
-    /*
-    IMPORTANT:
-    Client needs port forwarding on serverPort 49500 when connecting from a local network
-     */
-
     //call this function once before using other functions of the API
-    //confirm that it returns true
-    public static boolean initServerConnection() {
-        try {
-            Client.sendMessage(getPublicIP(), serverIP, clientPORT);
-            System.out.println("ip succesfully send to server");
-            System.out.println("waiting for server to confirm connection");
-            if (Client.receiveMessage(49500).equals("connection confirmed")) {
-                return true;
-            }
-            return false;
-        } catch (IOException ex) {
-            System.out.println("IOException while connecting to server");
-            return false;
-        }
+    public static void initServerConnection() {
+        Thread myThread = new Thread(new Client.ReceiveMsgThread(serverPORT));
+        myThread.start();
     }
 
+    /* Example:
+     * double timeframe = scanQR(1, 2, "2021-12-22 13:00:00");
+     */
     public static double scanQR(int UID, int PID, String DateTime) {
         String msg = "scanQR;" + UID + ";" + PID + ";" + DateTime;
         try {
@@ -40,7 +27,7 @@ public class ClientApp {
         } catch (IOException e) {
             return 0.0;
         }
-        msg = Client.receiveMessage(serverPORT);
+        msg = Client.receiveMessage();
         return Double.parseDouble(msg);
     }
 
@@ -48,17 +35,23 @@ public class ClientApp {
         String msg = "newUser;" + NewUser;
         try {
             Client.sendMessage(msg, serverIP, clientPORT);
+            System.out.println("TEST - message send");
         } catch (IOException e) {
             return 0;
         }
-        msg = Client.receiveMessage(serverPORT);
-
+        System.out.println("TEST - pre receive");
+        msg = Client.receiveMessage();
+        System.out.println("TEST - post receive");
         return Integer.parseInt(msg);
     }
 
-    public static void setName(int UID, String NewName) throws IOException {
+    public static void setName(int UID, String NewName) {
         String msg = "setName;" + UID + ";" + NewName;
-        Client.sendMessage(msg, serverIP, clientPORT);
+        try {
+            Client.sendMessage(msg, serverIP, clientPORT);
+        } catch (IOException e) {
+            System.out.println("IOException: " + e);
+        }
     }
 
     public static ArrayList<Visit> loadVisits(int UID) {
@@ -69,7 +62,7 @@ public class ClientApp {
         } catch (IOException e) {
             return visits;
         }
-        msg = Client.receiveMessage(serverPORT);
+        msg = Client.receiveMessage();
 
 
 
@@ -102,23 +95,10 @@ public class ClientApp {
         } catch (IOException e) {
             return new String[0];
         }
-        msg = Client.receiveMessage(serverPORT);
+        msg = Client.receiveMessage();
 
         String[] metPeople = msg.split(";");
 
         return metPeople;
-    }
-
-    private static String getPublicIP()
-    {
-        try {
-
-            Document doc = Jsoup.connect("http://www.checkip.org").get();
-            return doc.getElementById("yourip").select("h1").first().select("span").text();
-
-        } catch (IOException ex) {
-            System.out.println("IOException: " + ex);
-            return "error: no ip found";
-        }
     }
 }
