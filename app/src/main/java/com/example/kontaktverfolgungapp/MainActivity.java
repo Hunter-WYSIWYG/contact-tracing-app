@@ -124,12 +124,13 @@ public class MainActivity extends AppCompatActivity {
                         editor.commit();
 
                         //database integrated for newUser
-                        
                         int UID = ClientApp.newUser(n+";"+ph+";");
                         if (UID == 0) {
                             Toast.makeText(MainActivity.this, "Nutzer konnte nicht abgespeichert werden.", Toast.LENGTH_LONG).show();
                         } else {
                             editor.putInt("UID", UID);
+
+                            editor.commit();
                         }
                         //schließen des Fensters
                         dialog.dismiss();
@@ -177,15 +178,14 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            //TODO: pid aus result abrufen
-                            int PID= 1;
+                            int PID= Integer.parseInt(String.valueOf(result));
                             SharedPreferences mySPR = getSharedPreferences("Pref", 0);
                             int UID = mySPR.getInt("UID", 0);
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             Date date = new Date(result.getTimestamp());
                             String dateTime = simpleDateFormat.format(date);
                             ClientApp.scanQR(UID, PID, dateTime);
-                            Toast.makeText(MainActivity.this, result.getText(), Toast.LENGTH_LONG).show();
+                         //   Toast.makeText(MainActivity.this, result.getText(), Toast.LENGTH_LONG).show();
                         }
                     });
                 }
@@ -404,11 +404,7 @@ public class MainActivity extends AppCompatActivity {
                 // database integrated for setName
                 int UID = mySPR.getInt("UID", 0);
                 if (UID != 0) {
-                    try {
-                        ClientApp.setName(UID, n + ";" + ph + ";");
-                    } catch (IOException e) {
-                        Toast.makeText(MainActivity.this, "Ihr Name konnte nicht auf dem Server geändert werden.", Toast.LENGTH_LONG).show();
-                    }
+                    ClientApp.setName(UID, n + ";" + ph + ";");
                 } else {
                     Toast.makeText(MainActivity.this, "Ihre UID konnte nicht abgerufen werden.", Toast.LENGTH_LONG).show();
                 }
