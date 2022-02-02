@@ -201,11 +201,7 @@ public class Activity_Swipe_Left extends AppCompatActivity {
                         // database integrated for setName
                          int UID = mySPR.getInt("UID", 0);
                         if (UID != 0) {
-                            try {
-                                ClientApp.setName(UID, n + ";" + ph + ";");
-                            } catch (IOException e) {
-                                Toast.makeText(Activity_Swipe_Left.this, "Ihr Name konnte nicht auf dem Server geändert werden.", Toast.LENGTH_LONG).show();
-                            }
+                            ClientApp.setName(UID, n + ";" + ph + ";");
                         } else {
                             Toast.makeText(Activity_Swipe_Left.this, "Ihre UID konnte nicht abgerufen werden.", Toast.LENGTH_LONG).show();
                         }
