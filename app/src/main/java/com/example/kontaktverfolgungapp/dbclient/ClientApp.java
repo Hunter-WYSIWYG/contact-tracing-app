@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-public class ClientApp {
+public class ClientApp implements Communication {
 
     final static String serverIP = "192.168.178.50";    //private ip of server
     final static int serverPORT = 49500;
