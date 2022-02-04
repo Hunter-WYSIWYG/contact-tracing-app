@@ -313,8 +313,8 @@ public class MainActivity extends AppCompatActivity {
                 float deltaX = x2 - x1; //getting value for horizontal swipe
                 if (Math.abs(deltaX) > MIN_DISTANCE)
                 {
-                    // Left to Right swipe action
-                    if (x2 > x1)
+                    // Right to Left swipe action
+                    if (x1 > x2)
                     {
                         Intent i = new Intent(MainActivity.this, Activity_Swipe_Left.class);
                         startActivity(i);
