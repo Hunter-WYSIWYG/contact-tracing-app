@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                         editor.commit();
 
                         //database integrated for newUser
-                        int UID = ClientApp.newUser(n+";"+ph+";");
+                        int UID = ClientApp.newUser(n+" "+ph+" ");
                         if (UID == 0) {
                             Toast.makeText(MainActivity.this, "Nutzer konnte nicht abgespeichert werden.", Toast.LENGTH_LONG).show();
                         } else {
