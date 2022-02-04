@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
                             Date date = new Date(result.getTimestamp());
                             String dateTime = simpleDateFormat.format(date);
                             ClientApp.scanQR(UID, PID, dateTime);
-                         //   Toast.makeText(MainActivity.this, result.getText(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this, "QR-Code wurde erfolgreich gescannt.", Toast.LENGTH_LONG).show();
                         }
                     });
                 }
