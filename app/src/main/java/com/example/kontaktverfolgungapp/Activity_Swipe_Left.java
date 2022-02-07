@@ -66,11 +66,14 @@ public class Activity_Swipe_Left extends AppCompatActivity {
         }
 
         for (Visit visit : visits) {
+            places.add(visit);
             int PID = visit.getPID();
             String dateTime = visit.getDateTime();
             String[] metPeopleNames = ClientApp.loadMetPeople(PID, dateTime);
             metPeopleAtPlace.put(visit.getPlaceName(), Arrays.asList(metPeopleNames));
         }
+
+        adapter.notifyDataSetChanged();
     }
 
     private void initTestListData() {

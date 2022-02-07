@@ -83,11 +83,17 @@ public class MainActivity extends AppCompatActivity {
 
             button_Save = (Button) loginPopupView.findViewById(R.id.save_Button);
 
+            //Shared Pref Datei öffnen
+            SharedPreferences mySPR = getSharedPreferences("Pref", 0);
+            int UID = mySPR.getInt("UID", 0);
 
-
-            dialogBuilder.setView(loginPopupView);
-            dialog = dialogBuilder.create();
-            dialog.show();
+            //init dialogBuilder
+            dialogBuilder.setCancelable(false);
+            if (UID <= 0) {
+                dialogBuilder.setView(loginPopupView);
+                dialog = dialogBuilder.create();
+                dialog.show();
+            }
 
             button_Save.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     else if(newNachname.length()==0){
                         newNachname.setError("Nachname eingebn");
                     }
-                    else if(!n.matches("[a-zA-z]+")){
+                    else if(!ph.matches("[a-zA-z]+")){
 
                         newNachname.setError("Es sind nur Buchstaben erlaubt!");
                     }
@@ -143,9 +149,6 @@ public class MainActivity extends AppCompatActivity {
 
             //test
 
-//-------------Name beim öffnen laden------------
-            //Shared Pref Datei öffnen
-            SharedPreferences mySPR = getSharedPreferences("Pref", 0);
 //Werte aus Datei in Textfelder
             newVorname.setText(mySPR.getString("vornameKey", ""));
             newNachname.setText(mySPR.getString("nachnameKey", ""));
@@ -404,7 +407,7 @@ public class MainActivity extends AppCompatActivity {
                 // database integrated for setName
                 int UID = mySPR.getInt("UID", 0);
                 if (UID != 0) {
-                    ClientApp.setName(UID, n + ";" + ph + ";");
+                    ClientApp.setName(UID, n + " " + ph + ";");
                 } else {
                     Toast.makeText(MainActivity.this, "Ihre UID konnte nicht abgerufen werden.", Toast.LENGTH_LONG).show();
                 }

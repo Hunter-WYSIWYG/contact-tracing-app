@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/marcu/Desktop/projekt_mobile-anwendungsentwicklung/app/src/main/res/layout/activity_main.xml" value="0.1796875" />
+        <entry key="..\:/Users/marcu/Desktop/projekt_mobile-anwendungsentwicklung/app/src/main/res/layout/activity_main2.xml" value="0.1796875" />
+        <entry key="..\:/Users/marcu/Desktop/projekt_mobile-anwendungsentwicklung/app/src/main/res/layout/activity_swipe_left.xml" value="0.1796875" />
+        <entry key="..\:/Users/marcu/Desktop/projekt_mobile-anwendungsentwicklung/app/src/main/res/layout/list_group.xml" value="0.1796875" />
+        <entry key="..\:/Users/marcu/Desktop/projekt_mobile-anwendungsentwicklung/app/src/main/res/layout/login_popup.xml" value="0.1796875" />
+        <entry key="..\:/Users/marcu/Desktop/projekt_mobile-anwendungsentwicklung/app/src/main/res/layout/popup.xml" value="0.1796875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23731884057971014" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.23731884057971014" />
         <entry key="app/src/main/res/layout/activity_swipe_left.xml" value="0.18703241895261846" />

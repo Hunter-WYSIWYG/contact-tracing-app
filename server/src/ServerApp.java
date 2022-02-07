@@ -15,7 +15,7 @@ public class ServerApp {
 	final static String user = "mae";
 	final static String password = "mae2021";
 	
-	static String clientIP = "192.168.178.52"; //private IP of my phone in my local network
+	static String clientIP = "192.168.178.61"; //private IP of my phone in my local network
 	final static int serverPORT = 49500;	//server is sending on this port
 	final static int clientPORT = 49501;	//server is receiving on this port
 	static Server server;

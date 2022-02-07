@@ -7,7 +7,7 @@ import org.jsoup.nodes.Document;
 
 public class ClientApp implements Communication {
 
-    final static String serverIP = "192.168.178.50";    //private ip of server
+    final static String serverIP = "192.168.178.94";    //private ip of server
     final static int serverPORT = 49500;
     final static int clientPORT = 49501;
 
@@ -64,9 +64,7 @@ public class ClientApp implements Communication {
         }
         msg = Client.receiveMessage();
 
-
-
-        if (msg.isEmpty()) {
+        if (msg == null) {
             return visits;
         }
 
