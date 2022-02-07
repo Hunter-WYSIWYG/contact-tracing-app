@@ -34,7 +34,8 @@ public class MainAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
         // returns items count of a group
-        return listItemGroups.get(((Visit)getGroup(groupPosition)).getPlaceName()).size();
+        String VID = String.valueOf(((Visit)getGroup(groupPosition)).getVID());
+        return listItemGroups.get(VID).size();
     }
 
     @Override
@@ -46,7 +47,8 @@ public class MainAdapter extends BaseExpandableListAdapter {
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         // returns a group item
-        return listItemGroups.get(((Visit)getGroup(groupPosition)).getPlaceName()).get(childPosition);
+        String VID = String.valueOf(((Visit)getGroup(groupPosition)).getVID());
+        return listItemGroups.get(VID).get(childPosition);
     }
 
     @Override

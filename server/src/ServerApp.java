@@ -15,9 +15,14 @@ public class ServerApp {
 	final static String user = "mae";
 	final static String password = "mae2021";
 	
-	static String clientIP = "192.168.178.61"; //private IP of my phone in my local network
-	final static int serverPORT = 49500;	//server is sending on this port
-	final static int clientPORT = 49501;	//server is receiving on this port
+	//private IP of my phone in my local network
+	static String clientIP = "192.168.178.61";
+	
+	//server is sending on this port
+	final static int serverPORT = 49500;
+	
+	//server is receiving on this port
+	final static int clientPORT = 49501;
 	static Server server;
 	
     public static void main(String[] args) {
@@ -70,6 +75,7 @@ public class ServerApp {
         				answer = "";
         				for(int i=0; i<visits.size(); i++) {
         					answer +=
+    							visits.get(i).getVID() + ";" +
         						visits.get(i).getPID() + ";" +
 								visits.get(i).getPlaceName() + ";" +
 								visits.get(i).getDateTime() + ";" +
@@ -204,7 +210,7 @@ public class ServerApp {
     	try {
 	    	
 	    	String query =
-				"select PID, Name, DateTime, Timeframe " +
+				"select VID, PID, Name, DateTime, Timeframe " +
 				"from Visits join Places using (PID) " +
 				"where UID = ?" +
 				"order by DateTime;";
@@ -216,6 +222,7 @@ public class ServerApp {
 	    	ResultSetMetaData rsmd = rs.getMetaData();
 	    	int columnCount = rsmd.getColumnCount();
 	    	ArrayList<Visit> visits = new ArrayList<Visit>();
+	    	int VID = 0;
 	    	int PID = 0;
 	    	String PlaceName = "";
 	    	String DateTime = "";
@@ -225,20 +232,23 @@ public class ServerApp {
 	    		for (int i = 1; i <= columnCount; i++) {
 	    			switch (i) {
 	    			case 1:
-	    				PID = Integer.parseInt(rs.getString(i));
+	    				VID = Integer.parseInt(rs.getString(i));
 	    				break;
 	    			case 2:
-	    				PlaceName = rs.getString(i);
+	    				PID = Integer.parseInt(rs.getString(i));
 	    				break;
 	    			case 3:
-	    				DateTime = rs.getString(i);
+	    				PlaceName = rs.getString(i);
 	    				break;
 	    			case 4:
+	    				DateTime = rs.getString(i);
+	    				break;
+	    			case 5:
 	    				Timeframe = Double.parseDouble(rs.getString(i));
 	    				break;
 	    			}
 	    		}
-	    		Visit newVisit = new Visit(PID, PlaceName, DateTime, Timeframe);
+	    		Visit newVisit = new Visit(VID, PID, PlaceName, DateTime, Timeframe);
 	    		visits.add(newVisit); 
 	    	}
 	    	ps.close();

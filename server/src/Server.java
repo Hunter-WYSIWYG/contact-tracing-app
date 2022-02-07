@@ -25,6 +25,7 @@ public class Server {
             pw.flush();
             pw.close();
             sendingSocket.close();
+            System.out.println("SEND MSG: " + msg);
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

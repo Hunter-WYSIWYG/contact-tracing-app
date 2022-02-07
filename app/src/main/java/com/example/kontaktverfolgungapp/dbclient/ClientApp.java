@@ -35,13 +35,10 @@ public class ClientApp implements Communication {
         String msg = "newUser;" + NewUser;
         try {
             Client.sendMessage(msg, serverIP, clientPORT);
-            System.out.println("TEST - message send");
         } catch (IOException e) {
             return 0;
         }
-        System.out.println("TEST - pre receive");
         msg = Client.receiveMessage();
-        System.out.println("TEST - post receive");
         return Integer.parseInt(msg);
     }
 
@@ -73,12 +70,13 @@ public class ClientApp implements Communication {
         for(int i=0; i<visitObjects.length; i++) {
             String[] visitProps = visitObjects[i].split(";");
 
-            int PID = Integer.parseInt(visitProps[0]);
-            String PlaceName = visitProps[1];
-            String DateTime = visitProps[2];
-            double Timeframe = Double.parseDouble(visitProps[3]);
+            int VID = Integer.parseInt(visitProps[0]);
+            int PID = Integer.parseInt(visitProps[1]);
+            String PlaceName = visitProps[2];
+            String DateTime = visitProps[3];
+            double Timeframe = Double.parseDouble(visitProps[4]);
 
-            Visit newVisit = new Visit(PID, PlaceName, DateTime, Timeframe);
+            Visit newVisit = new Visit(VID, PID, PlaceName, DateTime, Timeframe);
             visits.add(newVisit);
         }
 

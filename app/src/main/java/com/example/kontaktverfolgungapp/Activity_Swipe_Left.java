@@ -70,18 +70,18 @@ public class Activity_Swipe_Left extends AppCompatActivity {
             int PID = visit.getPID();
             String dateTime = visit.getDateTime();
             String[] metPeopleNames = ClientApp.loadMetPeople(PID, dateTime);
-            metPeopleAtPlace.put(visit.getPlaceName(), Arrays.asList(metPeopleNames));
+            metPeopleAtPlace.put(String.valueOf(visit.getVID()), Arrays.asList(metPeopleNames));
         }
 
         adapter.notifyDataSetChanged();
     }
 
     private void initTestListData() {
-        places.add(new Visit(0, "Cinemax", "2021-12-21 13:00:00", 1.5));
-        places.add(new Visit(0, "Theater", "2021-12-21 13:00:00", 1.5));
-        places.add(new Visit(0, "Mr. Pan", "2021-12-21 13:00:00", 1.5));
-        places.add(new Visit(0, "MLU", "2021-12-21 13:00:00", 1.5));
-        places.add(new Visit(0, "Irgendwas", "2021-12-21 13:00:00", 1.5));
+        places.add(new Visit(1, 0, "Cinemax", "2021-12-21 13:00:00", 1.5));
+        places.add(new Visit(2, 0, "Theater", "2021-12-21 13:00:00", 1.5));
+        places.add(new Visit(3, 0, "Mr. Pan", "2021-12-21 13:00:00", 1.5));
+        places.add(new Visit(4, 0, "MLU", "2021-12-21 13:00:00", 1.5));
+        places.add(new Visit(5, 0, "Irgendwas", "2021-12-21 13:00:00", 1.5));
 
         String [] placesFromStringRessources;
 
@@ -204,7 +204,7 @@ public class Activity_Swipe_Left extends AppCompatActivity {
                         // database integrated for setName
                          int UID = mySPR.getInt("UID", 0);
                         if (UID != 0) {
-                            ClientApp.setName(UID, n + ";" + ph + ";");
+                            ClientApp.setName(UID, n + " " + ph + ";");
                         } else {
                             Toast.makeText(Activity_Swipe_Left.this, "Ihre UID konnte nicht abgerufen werden.", Toast.LENGTH_LONG).show();
                         }
