@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
             button_Save = (Button) loginPopupView.findViewById(R.id.save_Button);
 
-            //Shared Pref Datei öffnen
+            //open Shared Pref File
             SharedPreferences mySPR = getSharedPreferences("Pref", 0);
             int UID = mySPR.getInt("UID", 0);
 
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     else{
-                        //Shared Pref Datei öffnen
+                        //open Shared Pref File
                         SharedPreferences mySPR = getSharedPreferences("Pref", 0);
                         //Editor Klasse initiaisieren
                         SharedPreferences.Editor editor = mySPR.edit();
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
             //test
 
-//Werte aus Datei in Textfelder
+//Values from file into text fields
             newVorname.setText(mySPR.getString("vornameKey", ""));
             newNachname.setText(mySPR.getString("nachnameKey", ""));
 
@@ -362,9 +362,9 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setView(contactPopupView);
         dialog = dialogBuilder.create();
         dialog.show();
-        //Shared Pref Datei öffnen
+        //open Shared Pref File
         SharedPreferences mySPR = getSharedPreferences("Pref", 0);
-        //gespeicherte Namen aus der Datei laden
+        //Load saved names from file
         newcontactpopup_firstname.setText(mySPR.getString("vornameKey", ""));
         newcontactpopup_lastname.setText(mySPR.getString("nachnameKey", ""));
 
@@ -375,26 +375,26 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String n = newcontactpopup_firstname.getText().toString();
                 String ph = newcontactpopup_lastname.getText().toString();
-                //überprüfen ob Vorname-Eingabe leer ist
+                //check if first name input is empty
                 if(newcontactpopup_firstname.length()==0){
                     newcontactpopup_firstname.setError("Vorname eingeben");
                 }
-                //überprüfen ob sonderzeichen enthaletn sind
+                //check if special characters are included
                 else if(!n.matches("[a-zA-z]+")){
 
                     newcontactpopup_firstname.setError("Es sind nur Buchstaben erlaubt!");
                 }
-                //überprüfen ob Nachname-Eingabe leer ist
+                //check if last name input is empty
                 else if(newcontactpopup_lastname.length()==0){
                     newcontactpopup_lastname.setError("Nachname eingebn");
                 }
-                //überprüfen ob sonderzeichen enthaletn sind
+                //check if special characters are included
                 else if(!ph.matches("[a-zA-z]+")){
 
                     newcontactpopup_lastname.setError("Es sind nur Buchstaben erlaubt!");
                 }
                 else{
-                //Shared Pref Datei öffnen
+                //open Shared Pref File
                 SharedPreferences mySPR = getSharedPreferences("Pref", 0);
                 //Editor Klasse initiaisieren
                 SharedPreferences.Editor editor = mySPR.edit();
@@ -412,7 +412,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Ihre UID konnte nicht abgerufen werden.", Toast.LENGTH_LONG).show();
                 }
 
-                //schließen
+                //close
                 dialog.dismiss();}
 
 
