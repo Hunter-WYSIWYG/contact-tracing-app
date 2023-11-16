@@ -24,6 +24,10 @@ In this section, some screenshots of the project results are displayed. Take a l
 
 <img width="385" alt="Fehler_nachname" src="https://github.com/mgagel/contact-tracing-app/assets/73076495/4f47f15f-d7d1-43e5-b3f6-e80813f7613a">
 
+### Android App Location List
+
+<img width="385" alt="Fehler_nachname" src="https://github.com/mgagel/contact-tracing-app/assets/73076495/3c91334f-b285-4101-8154-421693340289">
+
 ### Database Entity Relationship Model
 
 ![MAE-ERM](https://github.com/mgagel/contact-tracing-app/assets/73076495/d57741b6-ed29-4d09-a886-dfd3efa26271)
